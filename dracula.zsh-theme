@@ -1,6 +1,6 @@
 # Dracula Theme v1.2.5
 #
-# https://github.com/zenorocha/dracula-theme
+# https://github.com/dracula/dracula-theme
 #
 # Copyright 2016, All rights reserved
 #
