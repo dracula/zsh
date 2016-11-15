@@ -2,6 +2,7 @@
 
 > A dark theme for [ZSH](http://zsh.org). This version displays the full path and removes an unnecessary space.
 
+So basically it's just like the following screenshot but with the full path. Get it? Pretty straighforward.
 ![Screenshot](https://draculatheme.com/assets/img/screenshots/zsh.png)
 
 ## Install
