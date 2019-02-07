@@ -9,9 +9,18 @@
 #
 # @author Zeno Rocha <hi@zenorocha.com>
 
+local date_fmt="%l:%M%p"
+
+# locale specific time format
+# Note: reloading plugin is required if locale changes,
+# this is for speed purposes
+if locale -c LC_TIME -k | grep 'am_pm=";"'; then
+  date_fmt="%k:M"
+fi
+
 local ret_status="%(?:%{$fg_bold[green]%}➜:%{$fg_bold[red]%}➜)"
 
-PROMPT='${ret_status}%{$fg_bold[green]%} %{$fg_bold[blue]%}%c $(git_prompt_info)% %{$reset_color%}'
+PROMPT='${ret_status}%{$fg_bold[green]%}%D{${date_fmt}} %{$fg_bold[blue]%}%c $(git_prompt_info)% %{$reset_color%}'
 
 ZSH_THEME_GIT_PROMPT_CLEAN=") %{$fg_bold[green]%}✔ "
 ZSH_THEME_GIT_PROMPT_DIRTY=") %{$fg_bold[yellow]%}✗ "
