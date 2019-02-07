@@ -16,6 +16,7 @@ DRACULA_DISPLAY_TIME=${DRACULA_DISPLAY_TIME:-0}
 dracula_time_segment() {
   if (( DRACULA_DISPLAY_TIME )); then
     local time_fmt="%D{%l:%M%p}"
+    
     if locale -c LC_TIME -k | grep 'am_pm=";"'; then
       time_fmt="%D{%k:M}"
     fi
@@ -24,9 +25,15 @@ dracula_time_segment() {
   fi
 }
 
+# Slightly faster git_prompt_info when not in a git repo
+# Note that this is a stand-in improvement until I get async implemented.
+dracula_git_segment() {
+  [[ -d ./.git ]] && git_prompt_info
+}
+
 local ret_status="%(?:%{$fg_bold[green]%}➜:%{$fg_bold[red]%}➜)"
 
-PROMPT='${ret_status}%{$fg_bold[green]%}$(dracula_time_segment) %{$fg_bold[blue]%}%c $(git_prompt_info)% %{$reset_color%}'
+PROMPT='${ret_status}%{$fg_bold[green]%}$(dracula_time_segment) %{$fg_bold[blue]%}%c $(dracula_git_segment)% %{$reset_color%}'
 
 ZSH_THEME_GIT_PROMPT_CLEAN=") %{$fg_bold[green]%}✔ "
 ZSH_THEME_GIT_PROMPT_DIRTY=") %{$fg_bold[yellow]%}✗ "
