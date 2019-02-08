@@ -9,7 +9,7 @@
 #
 # @author Zeno Rocha <hi@zenorocha.com>
 
-# Set dracula display time to 0 to hide the date
+# Set dracula display time to 1 to show the date
 DRACULA_DISPLAY_TIME=${DRACULA_DISPLAY_TIME:-0}
 
 # locale specific time format
@@ -33,7 +33,11 @@ dracula_git_segment() {
 
 local ret_status="%(?:%{$fg_bold[green]%}➜:%{$fg_bold[red]%}➜)"
 
-PROMPT='${ret_status}%{$fg_bold[green]%}$(dracula_time_segment) %{$fg_bold[blue]%}%c $(dracula_git_segment)% %{$reset_color%}'
+PROMPT='${ret_status}'
+PROMPT+='%{$fg_bold[green]%}$(dracula_time_segment) '
+PROMPT+='%{$fg_bold[blue]%}%c '
+PROMPT+='$(dracula_git_segment)% '
+PROMPT+='%{$reset_color%}'
 
 ZSH_THEME_GIT_PROMPT_CLEAN=") %{$fg_bold[green]%}✔ "
 ZSH_THEME_GIT_PROMPT_DIRTY=") %{$fg_bold[yellow]%}✗ "
