@@ -61,7 +61,7 @@ dracula_set_symbols() {
       DRACULA_SYMBOL_GITDIRTY="$DRACULA_DEFAULT_GLYPH_GITDIRTY"
       ;;
     *)
-      >&2 print "DRACULA_SYMBOL_MODE does not have a valid value: it is set to $DRACULA_SYMBOL_MODE
+      >&2 echo "DRACULA_SYMBOL_MODE does not have a valid value: it is set to $DRACULA_SYMBOL_MODE
       Valid modes are:
       auto: if in a GUI terminal, enable symbols, this is the default
       ascii: forces ASCII-only symbols
@@ -81,7 +81,7 @@ dracula_time_segment() {
       time_fmt="%D{%k:M}"
     fi
 
-    print -n $time_fmt
+    echo -n $time_fmt
   fi
 }
 
