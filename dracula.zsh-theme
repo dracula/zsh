@@ -88,7 +88,7 @@ dracula_time_segment() {
 # Slightly faster git_prompt_info when not in a git repo
 # Note that this is a stand-in improvement until I get async implemented.
 dracula_git_segment() {
-  [[ -d ./.git ]] && git_prompt_info
+  [[ -d .git ]] && git_prompt_info
 }
 
 local ret_status="%(?:%{$fg_bold[green]%}${DRACULA_SYMBOL_START}:%{$fg_bold[red]%}${DRACULA_SYMBOL_START})"
