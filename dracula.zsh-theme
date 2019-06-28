@@ -84,7 +84,6 @@ dracula_time_segment() {
   fi
 }
 
-local host_info=
 # Context
 # Shows hostname if using SSH or logged in as root
 if [[ -n "${SSH_CONNECTION-}${SSH_CLIENT-}${SSH_TTY-}" ]] || (( EUID == 0 )); then
@@ -92,9 +91,6 @@ if [[ -n "${SSH_CONNECTION-}${SSH_CLIENT-}${SSH_TTY-}" ]] || (( EUID == 0 )); th
 else
   psvar[1]=''
 fi
-
-
-if [[ -n "$SSH_CLIENT" ]]; then
 
 PROMPT="%(?:%{$fg_bold[green]%}${DRACULA_SYMBOL_START}:%{$fg_bold[red]%}${DRACULA_SYMBOL_START})"
 PROMPT+='%{$fg_bold[green]%}$(dracula_time_segment) '
