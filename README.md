@@ -12,9 +12,9 @@ All instructions can be found at [draculatheme.com/zsh](https://draculatheme.com
 
 This theme is maintained by the following person(s) and a bunch of [awesome contributors](https://github.com/dracula/zsh/graphs/contributors).
 
-[![Harrison Heck](https://avatars0.githubusercontent.com/u/1037526?v=3&s=70)](https://github.com/nesl247) |
+[![Aidan Williams](https://avatars0.githubusercontent.com/u/30708886?s=400&u=9b64914921f33bb52c509976bed984a7360d9a0e&v=4)](https://github.com/AGitBoy) |
 --- | ---
-[Harrison Heck](https://github.com/nesl247) |
+[Aidan Williams](https://github.com/AGitBoy) |
 
 ## License
 
