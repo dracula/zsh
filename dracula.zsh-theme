@@ -102,11 +102,10 @@ PROMPT+='%F{green}%B$(dracula_time_segment) '
 PROMPT+='%F{magenta}%B%n%1v '
 PROMPT+='%F{blue}%B%c '
 PROMPT+='$(git_prompt_info)'
-PROMPT+='%f%b'
 
-ZSH_THEME_GIT_PROMPT_CLEAN=") %{$fg_bold[green]%}${DRACULA_SYMBOL_GITCLEAN} "
-ZSH_THEME_GIT_PROMPT_DIRTY=") %{$fg_bold[yellow]%}${DRACULA_SYMBOL_GITDIRTY} "
-ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg_bold[cyan]%}("
-ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
+ZSH_THEME_GIT_PROMPT_CLEAN=") %F{green}%B${DRACULA_SYMBOL_GITCLEAN} "
+ZSH_THEME_GIT_PROMPT_DIRTY=") %F{yellow}%B${DRACULA_SYMBOL_GITDIRTY} "
+ZSH_THEME_GIT_PROMPT_PREFIX="%F{cyan}%B("
+ZSH_THEME_GIT_PROMPT_SUFFIX="%f%b"
 
 # vim: set filetype=zsh :
