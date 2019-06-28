@@ -85,16 +85,10 @@ dracula_time_segment() {
   fi
 }
 
-# Slightly faster git_prompt_info when not in a git repo
-# Note that this is a stand-in improvement until I get async implemented.
-dracula_git_segment() {
-  [[ -d .git ]] && git_prompt_info
-}
-
 PROMPT="%(?:%{$fg_bold[green]%}${DRACULA_SYMBOL_START}:%{$fg_bold[red]%}${DRACULA_SYMBOL_START})"
 PROMPT+='%{$fg_bold[green]%}$(dracula_time_segment) '
 PROMPT+='%{$fg_bold[blue]%}%c '
-PROMPT+='$(dracula_git_segment)% '
+PROMPT+='$(git_prompt_info)'
 PROMPT+='%{$reset_color%}'
 
 ZSH_THEME_GIT_PROMPT_CLEAN=") %{$fg_bold[green]%}${DRACULA_SYMBOL_GITCLEAN} "
