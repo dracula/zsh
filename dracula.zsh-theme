@@ -9,6 +9,8 @@
 #
 # @author Zeno Rocha <hi@zenorocha.com>
 
+setopt PROMPT_SUBST
+
 # Options
 # Set dracula display time to 1 to show the date
 DRACULA_DISPLAY_TIME=${DRACULA_DISPLAY_TIME:-0}
@@ -38,6 +40,9 @@ dracula_set_symbols() {
   case "$1" in
     'auto')
       case $TERM in
+        xterm*)
+          dracula_set_symbols glyph
+          ;;
         *bsd)
           dracula_set_symbols ascii
           ;;
@@ -92,12 +97,12 @@ else
   psvar[1]=''
 fi
 
-PROMPT="%(?:%{$fg_bold[green]%}${DRACULA_SYMBOL_START}:%{$fg_bold[red]%}${DRACULA_SYMBOL_START})"
-PROMPT+='%{$fg_bold[green]%}$(dracula_time_segment) '
-PROMPT+='%{$fg_bold[magenta]%}%n%1v '
-PROMPT+='%{$fg_bold[blue]%}%c '
+PROMPT='%(?:%F{green}:%F{red})${DRACULA_SYMBOL_START}'
+PROMPT+='%F{green}%B$(dracula_time_segment) '
+PROMPT+='%F{magenta}%B%n%1v '
+PROMPT+='%F{blue}%B%c '
 PROMPT+='$(git_prompt_info)'
-PROMPT+='%{$reset_color%}'
+PROMPT+='%f%b'
 
 ZSH_THEME_GIT_PROMPT_CLEAN=") %{$fg_bold[green]%}${DRACULA_SYMBOL_GITCLEAN} "
 ZSH_THEME_GIT_PROMPT_DIRTY=") %{$fg_bold[yellow]%}${DRACULA_SYMBOL_GITDIRTY} "
