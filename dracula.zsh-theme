@@ -10,7 +10,6 @@
 # @author Zeno Rocha <hi@zenorocha.com>
 
 # Options
-
 # Set dracula display time to 1 to show the date
 DRACULA_DISPLAY_TIME=${DRACULA_DISPLAY_TIME:-0}
 
@@ -85,8 +84,17 @@ dracula_time_segment() {
   fi
 }
 
+# Context
+# Shows hostname if using SSH or logged in as root
+if [[ -n "${SSH_CONNECTION-}${SSH_CLIENT-}${SSH_TTY-}" ]] || (( EUID == 0 )); then
+  psvar[1]="$(print -P '@%m')"
+else
+  psvar[1]=''
+fi
+
 PROMPT="%(?:%{$fg_bold[green]%}${DRACULA_SYMBOL_START}:%{$fg_bold[red]%}${DRACULA_SYMBOL_START})"
 PROMPT+='%{$fg_bold[green]%}$(dracula_time_segment) '
+PROMPT+='%{$fg_bold[magenta]%}%n%1v '
 PROMPT+='%{$fg_bold[blue]%}%c '
 PROMPT+='$(git_prompt_info)'
 PROMPT+='%{$reset_color%}'
