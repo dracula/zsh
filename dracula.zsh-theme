@@ -102,6 +102,7 @@ PROMPT+='%F{green}%B$(dracula_time_segment) '
 PROMPT+='%F{magenta}%B%n%1v '
 PROMPT+='%F{blue}%B%c '
 PROMPT+='$(git_prompt_info)'
+PROMPT+='%f%b'
 
 ZSH_THEME_GIT_PROMPT_CLEAN=") %F{green}%B${DRACULA_SYMBOL_GITCLEAN} "
 ZSH_THEME_GIT_PROMPT_DIRTY=") %F{yellow}%B${DRACULA_SYMBOL_GITDIRTY} "
