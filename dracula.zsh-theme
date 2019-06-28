@@ -91,9 +91,7 @@ dracula_git_segment() {
   [[ -d .git ]] && git_prompt_info
 }
 
-local ret_status="%(?:%{$fg_bold[green]%}${DRACULA_SYMBOL_START}:%{$fg_bold[red]%}${DRACULA_SYMBOL_START})"
-
-PROMPT='${ret_status}'
+PROMPT="%(?:%{$fg_bold[green]%}${DRACULA_SYMBOL_START}:%{$fg_bold[red]%}${DRACULA_SYMBOL_START})"
 PROMPT+='%{$fg_bold[green]%}$(dracula_time_segment) '
 PROMPT+='%{$fg_bold[blue]%}%c '
 PROMPT+='$(dracula_git_segment)% '
