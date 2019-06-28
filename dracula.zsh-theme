@@ -9,11 +9,19 @@
 #
 # @author Zeno Rocha <hi@zenorocha.com>
 
+# Initialization {{{
+source ${0:A:h}/lib/async.zsh
+autoload -Uz add-zsh-hook
 setopt PROMPT_SUBST
+async_init
+# }}}
 
-# Options
-# Set dracula display time to 1 to show the date
+# Options {{{
+# Set to 1 to show the date
 DRACULA_DISPLAY_TIME=${DRACULA_DISPLAY_TIME:-0}
+
+# Set to 0 to disable the 'context' segment
+DRACULA_DISPLAY_CONTEXT=${DRACULA_DISPLAY_CONTEXT:-1}
 
 # Which symbols to use.
 # Valid modes are:
@@ -31,7 +39,9 @@ DRACULA_DEFAULT_ASCII_GITDIRTY=${DRACULA_DEFAULT_ASCII_GITDIRTY:-'x'}
 
 DRACULA_DEFAULT_GLYPH_GITCLEAN=${DRACULA_DEFAULT_GLYPH_GITCLEAN:-'✔'}
 DRACULA_DEFAULT_ASCII_GITCLEAN=${DRACULA_DEFAULT_ASCII_GITCLEAN:-''}
+# }}}
 
+# Symbols {{{
 typeset -g DRACULA_SYMBOL_START
 typeset -g DRACULA_SYMBOL_GITCLEAN
 typeset -g DRACULA_SYMBOL_GITDIRTY
@@ -75,38 +85,79 @@ dracula_set_symbols() {
 }
 
 dracula_set_symbols "$DRACULA_SYMBOL_MODE"
+# }}}
 
-# locale specific time format
+# Status segment {{{
+PROMPT='%(?:%F{green}:%F{red})${DRACULA_SYMBOL_START}'
+# }}}
+
+# Time segment {{{
 dracula_time_segment() {
   if (( DRACULA_DISPLAY_TIME )); then
-    local time_fmt="%D{%l:%M%p}"
-    
-    if locale -c LC_TIME -k | grep 'am_pm=";"'; then
-      time_fmt="%D{%k:M}"
+    if [[ -z "$TIME_FORMAT" ]]; then
+      TIME_FORMAT="%k:M"
+      
+      # check if locale uses AM and PM
+      if ! locale -c LC_TIME -k | grep 'am_pm=";"'; then
+        TIME_FORMAT="%l:%M%p"
+      fi
     fi
 
-    echo -n $time_fmt
+    print -P "%D{$TIME_FORMAT}"
   fi
 }
 
-# Context
-# Shows hostname if using SSH or logged in as root
-if [[ -n "${SSH_CONNECTION-}${SSH_CLIENT-}${SSH_TTY-}" ]] || (( EUID == 0 )); then
-  psvar[1]="$(print -P '@%m')"
-else
-  psvar[1]=''
-fi
-
-PROMPT='%(?:%F{green}:%F{red})${DRACULA_SYMBOL_START}'
 PROMPT+='%F{green}%B$(dracula_time_segment) '
-PROMPT+='%F{magenta}%B%n%1v '
+# }}}
+
+# User context segment {{{
+dracula_context() {
+  if (( DRACULA_DISPLAY_CONTEXT )); then
+    if [[ -n "${SSH_CONNECTION-}${SSH_CLIENT-}${SSH_TTY-}" ]] || (( EUID == 0 )); then
+      echo '%n@%m'
+    else
+      echo '%n '
+    fi
+  fi
+}
+
+PROMPT+='%F{magenta}%B$(dracula_context)'
+# }}}
+
+# Directory segment {{{
 PROMPT+='%F{blue}%B%c '
-PROMPT+='$(git_prompt_info)'
-PROMPT+='%f%b'
+# }}}
+
+# Async git segment {{{
+dracula_git_status() {
+  cd "$1"
+  git_prompt_info
+}
+
+dracula_git_callback() {
+  DRACULA_GIT_STATUS="$3"
+  zle && zle reset-prompt
+  async_stop_worker dracula_git_worker dracula_git_status "$(pwd)"
+}
+
+dracula_git_async() {
+  async_start_worker dracula_git_worker -n
+  async_register_callback dracula_git_worker dracula_git_callback
+  async_job dracula_git_worker dracula_git_status $(pwd)
+}
+
+precmd() {
+  dracula_git_async
+}
+
+PROMPT+='$DRACULA_GIT_STATUS'
 
 ZSH_THEME_GIT_PROMPT_CLEAN=") %F{green}%B${DRACULA_SYMBOL_GITCLEAN} "
 ZSH_THEME_GIT_PROMPT_DIRTY=") %F{yellow}%B${DRACULA_SYMBOL_GITDIRTY} "
 ZSH_THEME_GIT_PROMPT_PREFIX="%F{cyan}%B("
 ZSH_THEME_GIT_PROMPT_SUFFIX="%f%b"
+# }}}
 
-# vim: set filetype=zsh :
+# Ensure effects are reset
+PROMPT+='%f%b'
+
