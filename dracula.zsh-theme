@@ -131,7 +131,32 @@ PROMPT+='%F{blue}%B%c '
 # Async git segment {{{
 dracula_git_status() {
   cd "$1"
-  git_prompt_info
+  
+  local ref branch
+  ref=$(git symbolic-ref --quiet HEAD 2>/dev/null)
+
+  case $? in
+    0)   ;;
+    128) return ;;
+    *)   ref=$(git rev-parse --short HEAD 2>/dev/null) || return ;;
+  esac
+
+  branch=${ref#refs/heads/}
+  
+  if [[ -n $branch ]]; then
+    echo -n "${ZSH_THEME_GIT_PROMPT_PREFIX}${branch}"
+
+    local git_status icon
+    git_status="$(LC_ALL=C =git status 2>&1)"
+    
+    if [[ "$git_status" =~ 'new file:|deleted:|modified:|renamed:|Untracked files:' ]]; then
+      echo -n "$ZSH_THEME_GIT_PROMPT_DIRTY"
+    else
+      echo -n "$ZSH_THEME_GIT_PROMPT_CLEAN"
+    fi
+
+    echo -n "$ZSH_THEME_GIT_PROMPT_SUFFIX"
+  fi
 }
 
 dracula_git_callback() {
@@ -160,4 +185,3 @@ ZSH_THEME_GIT_PROMPT_SUFFIX="%f%b"
 
 # Ensure effects are reset
 PROMPT+='%f%b'
-
