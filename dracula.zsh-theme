@@ -27,7 +27,7 @@ DRACULA_DISPLAY_CONTEXT=${DRACULA_DISPLAY_CONTEXT:-0}
 # }}}
 
 # Status segment {{{
-PROMPT='%(?:%F{green}:%F{red})${DRACULA_SYMBOL_START}'
+PROMPT='%(?:%F{green}:%F{red})➜'
 # }}}
 
 # Time segment {{{
