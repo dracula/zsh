@@ -1,3 +1,5 @@
+# -*- mode: sh; -*-
+
 # Dracula Theme v1.2.5
 #
 # https://github.com/dracula/dracula-theme
@@ -185,3 +187,4 @@ ZSH_THEME_GIT_PROMPT_SUFFIX="%f%b"
 
 # Ensure effects are reset
 PROMPT+='%f%b'
+
