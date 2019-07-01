@@ -53,7 +53,7 @@ PROMPT+='%F{green}%B$(dracula_time_segment) '
 dracula_context() {
   if (( DRACULA_DISPLAY_CONTEXT )); then
     if [[ -n "${SSH_CONNECTION-}${SSH_CLIENT-}${SSH_TTY-}" ]] || (( EUID == 0 )); then
-      echo '%n@%m'
+      echo '%n@%m '
     else
       echo '%n '
     fi
