@@ -25,6 +25,9 @@ DRACULA_DISPLAY_TIME=${DRACULA_DISPLAY_TIME:-0}
 # Set to 1 to show the 'context' segment
 DRACULA_DISPLAY_CONTEXT=${DRACULA_DISPLAY_CONTEXT:-0}
 
+# Changes the arrow icon
+DRACULA_ARROW_ICON=${DRACULA_ARROW_ICON:-➜ }
+
 # function to detect if git has support for --no-optional-locks
 dracula_test_git_optional_lock() {
   local git_version=${DEBUG_OVERRIDE_V:-"$(git version | cut -d' ' -f3)"}
@@ -54,7 +57,7 @@ DRACULA_GIT_NOLOCK=${DRACULA_GIT_NOLOCK:-$(dracula_test_git_optional_lock)}
 # }}}
 
 # Status segment {{{
-PROMPT='%(?:%F{green}:%F{red})➜ '
+PROMPT='%(?:%F{green}:%F{red})${DRACULA_ARROW_ICON}'
 # }}}
 
 # Time segment {{{
