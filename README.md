@@ -23,6 +23,12 @@ SSH, the hostname of the system. To enable this segment, use the following in yo
 DRACULA_DISPLAY_CONTEXT=1
 ```
 
+### Status Segment Indicator
+The status segment indicator (the arrow at the beginning), can be changed by setting the `DRACULA_ARROW_ICON` variable. For example, to use an ASCII '->':
+```sh
+DRACULA_ARROW_ICON="-> "
+```
+
 ### Git Locking
 This program automatically makes use of git's `--no-optional-locks` option,
 and it should automatically detect if your version supports the option. However,
