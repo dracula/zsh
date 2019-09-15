@@ -23,6 +23,13 @@ SSH, the hostname of the system. To enable this segment, use the following in yo
 DRACULA_DISPLAY_CONTEXT=1
 ```
 
+### Git Locking
+This program automatically makes use of git's `--no-optional-locks` option,
+and it should automatically detect if your version supports the option. However,
+if, for some reason, the automatically detected values are incorrect, you can
+forcefully disable or enable the functionality by setting the variable
+`DRACULA_GIT_NOLOCK` to 0 or 1, respectively.
+
 ## Team
 
 This theme is maintained by the following person(s) and a bunch of [awesome contributors](https://github.com/dracula/zsh/graphs/contributors).

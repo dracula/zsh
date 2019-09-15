@@ -24,6 +24,33 @@ DRACULA_DISPLAY_TIME=${DRACULA_DISPLAY_TIME:-0}
 
 # Set to 1 to show the 'context' segment
 DRACULA_DISPLAY_CONTEXT=${DRACULA_DISPLAY_CONTEXT:-0}
+
+# function to detect if git has support for --no-optional-locks
+dracula_test_git_optional_lock() {
+  local git_version=${DEBUG_OVERRIDE_V:-"$(git version | cut -d' ' -f3)"}
+  local git_version="$(git version | cut -d' ' -f3)"
+  # test for git versions < 2.14.0
+  case "$git_version" in
+    [0-1].*)
+      echo 0
+      return 1
+      ;;
+    2.[0-9].*)
+      echo 0
+      return 1
+      ;;
+    2.1[0-3].*)
+      echo 0
+      return 1
+      ;;
+  esac
+
+  # if version > 2.14.0 return true
+  echo 1
+}
+
+# use --no-optional-locks flag on git
+DRACULA_GIT_NOLOCK=${DRACULA_GIT_NOLOCK:-$(dracula_test_git_optional_lock)}
 # }}}
 
 # Status segment {{{
@@ -68,16 +95,20 @@ PROMPT+='%F{blue}%B%c '
 # }}}
 
 # Async git segment {{{
+
 dracula_git_status() {
   cd "$1"
   
-  local ref branch
-  ref=$(git symbolic-ref --quiet HEAD 2>/dev/null)
+  local ref branch lockflag
+  
+  (( DRACULA_GIT_NOLOCK )) && lockflag="--no-optional-locks"
+
+  ref=$(=git $lockflag symbolic-ref --quiet HEAD 2>/tmp/git-errors)
 
   case $? in
     0)   ;;
     128) return ;;
-    *)   ref=$(git rev-parse --short HEAD 2>/dev/null) || return ;;
+    *)   ref=$(=git $lockflag rev-parse --short HEAD 2>/tmp/git-errors) || return ;;
   esac
 
   branch=${ref#refs/heads/}
@@ -86,7 +117,7 @@ dracula_git_status() {
     echo -n "${ZSH_THEME_GIT_PROMPT_PREFIX}${branch}"
 
     local git_status icon
-    git_status="$(LC_ALL=C =git status 2>&1)"
+    git_status="$(LC_ALL=C =git $lockflag status 2>&1)"
     
     if [[ "$git_status" =~ 'new file:|deleted:|modified:|renamed:|Untracked files:' ]]; then
       echo -n "$ZSH_THEME_GIT_PROMPT_DIRTY"
