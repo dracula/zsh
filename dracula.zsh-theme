@@ -54,7 +54,7 @@ DRACULA_GIT_NOLOCK=${DRACULA_GIT_NOLOCK:-$(dracula_test_git_optional_lock)}
 # }}}
 
 # Status segment {{{
-PROMPT='%(?:%F{green}:%F{red})➜'
+PROMPT='%(?:%F{green}:%F{red})➜ '
 # }}}
 
 # Time segment {{{
