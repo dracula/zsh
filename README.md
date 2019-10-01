@@ -5,6 +5,9 @@
 So basically it's just like the following screenshot but with the full path. Get it? Pretty straighforward.
 ![Screenshot](https://draculatheme.com/assets/img/screenshots/zsh.png)
 
+This is a current example from Yakuake using this theme:
+![Screenshot](./screenshot.png)
+
 ## Install
 
 General instructions can be found at [draculatheme.com/zsh](https://draculatheme.com/zsh).
