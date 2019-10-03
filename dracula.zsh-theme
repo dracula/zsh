@@ -67,7 +67,7 @@ dracula_time_segment() {
       TIME_FORMAT="%k:M"
       
       # check if locale uses AM and PM
-      if ! locale -c LC_TIME -k | grep 'am_pm=";"'; then
+      if ! locale -ck LC_TIME | grep 'am_pm=";"'; then
         TIME_FORMAT="%l:%M%p"
       fi
     fi
