@@ -2,7 +2,7 @@
 
 > A dark theme for [ZSH](http://zsh.org).
 
-![Screenshot](https://draculatheme.com/assets/img/screenshots/zsh.png)
+![Screenshot](./screenshot.png)
 
 ## Install
 
