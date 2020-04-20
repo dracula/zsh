@@ -10,6 +10,7 @@
 # http://zenorocha.mit-license.org
 #
 # @author Zeno Rocha <hi@zenorocha.com>
+# @maintainer Aidan Williams <aidanwillie0317@protonmail.com>
 
 # Initialization {{{
 source ${0:A:h}/lib/async.zsh

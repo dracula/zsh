@@ -17,7 +17,7 @@ DRACULA_DISPLAY_TIME=1
 ```
 
 ### Context Segment
-The context segment, which shows the username, and, if the user is root or logged in via
+The context segment shows the username, and, if the user is root or logged in via
 SSH, the hostname of the system. To enable this segment, use the following in your config file:
 ```
 DRACULA_DISPLAY_CONTEXT=1
