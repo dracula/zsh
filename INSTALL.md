@@ -1,4 +1,4 @@
-### [Zsh](http://zsh.org/)
+### [Zsh](https://ohmyz.sh/)
 
 #### Install using Git
 
