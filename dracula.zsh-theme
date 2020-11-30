@@ -58,7 +58,9 @@ DRACULA_GIT_NOLOCK=${DRACULA_GIT_NOLOCK:-$(dracula_test_git_optional_lock)}
 # }}}
 
 # Status segment {{{
-PROMPT='%(?:%F{green}:%F{red})${DRACULA_ARROW_ICON}'
+# arrow is green if last command was successful, red if not, 
+# turns yellow in vi command mode
+PROMPT='%(1V:%F{yellow}:%(?:%F{green}:%F{red}))${DRACULA_ARROW_ICON}'
 # }}}
 
 # Time segment {{{
@@ -148,6 +150,20 @@ dracula_git_async() {
 precmd() {
   dracula_git_async
 }
+
+# ensure vi mode is handled by prompt
+zle-keymap-select() {
+  if [[ $KEYMAP = vicmd ]]; then
+    psvar[1]=vicmd
+  else
+    psvar[1]=''
+  fi
+
+  zle reset-prompt
+  zle -R
+}
+
+zle -N zle-keymap-select
 
 PROMPT+='$DRACULA_GIT_STATUS'
 
