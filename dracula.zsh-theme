@@ -160,7 +160,7 @@ ZSH_THEME_GIT_PROMPT_SUFFIX="%f%b"
 # }}}
 
 # ensure vi mode is handled by prompt
-zle-keymap-select() {
+function zle-keymap-select zle-line-init {
   if [[ $KEYMAP = vicmd ]]; then
     psvar[1]=vicmd
   else
@@ -171,6 +171,7 @@ zle-keymap-select() {
   zle -R
 }
 
+zle -N zle-line-init
 zle -N zle-keymap-select
 
 # Ensure effects are reset
