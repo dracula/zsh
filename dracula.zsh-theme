@@ -146,9 +146,7 @@ dracula_git_async() {
   async_job dracula_git_worker dracula_git_status "$(pwd)"
 }
 
-precmd() {
-  dracula_git_async
-}
+add-zsh-hook precmd dracula_git_async
 
 PROMPT+='$DRACULA_GIT_STATUS'
 
