@@ -168,7 +168,7 @@ function zle-keymap-select zle-line-init-dracula {
   zle -R
 }
 
-zle -N zle-line-init
+zle -N zle-line-init-dracula
 zle -N zle-keymap-select
 
 # Ensure effects are reset
