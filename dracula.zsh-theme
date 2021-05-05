@@ -157,7 +157,7 @@ ZSH_THEME_GIT_PROMPT_SUFFIX="%f%b"
 # }}}
 
 # ensure vi mode is handled by prompt
-function zle-keymap-select zle-line-init {
+function zle-keymap-select zle-line-init-dracula {
   if [[ $KEYMAP = vicmd ]]; then
     psvar[1]=vicmd
   else
