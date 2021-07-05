@@ -99,6 +99,10 @@ PROMPT+='%F{magenta}%B$(dracula_context)'
 PROMPT+='%F{blue}%B%c '
 # }}}
 
+# Custom variable {{{
+PROMPT+='%F{green}$DRACULA_CUSTOM_VARIABLE '
+# }}}
+
 # Async git segment {{{
 
 dracula_git_status() {

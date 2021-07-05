@@ -29,6 +29,12 @@ The status segment indicator (the arrow at the beginning), can be changed by set
 DRACULA_ARROW_ICON="-> "
 ```
 
+### Custom Segment
+The custom segment can be changed by setting the `DRACULA_CUSTOM_VARIABLE` environmental variable.
+```sh
+export DRACULA_CUSTOM_VARIABLE=AWS:PROD:EU-WEST-1
+```
+
 ### Git Locking
 This program automatically makes use of git's `--no-optional-locks` option,
 and it should automatically detect if your version supports the option. However,
