@@ -100,7 +100,9 @@ PROMPT+='%F{blue}%B%c '
 # }}}
 
 # Custom variable {{{
-PROMPT+='%F{green}$DRACULA_CUSTOM_VARIABLE '
+if [[ ! -z $DRACULA_CUSTOM_VARIABLE ]] {
+    PROMPT+='%F{green}$DRACULA_CUSTOM_VARIABLE '
+}
 # }}}
 
 # Async git segment {{{
