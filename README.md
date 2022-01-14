@@ -29,6 +29,12 @@ The status segment indicator (the arrow at the beginning), can be changed by set
 DRACULA_ARROW_ICON="-> "
 ```
 
+### New Line for commands
+You can display a new line for your commands. So you are able to split the terminal infos and the following command in seperate lines.
+```sh
+DRACULA_DISPLAY_NEW_LINE=1
+```
+
 ### Git Locking
 This program automatically makes use of git's `--no-optional-locks` option,
 and it should automatically detect if your version supports the option. However,
