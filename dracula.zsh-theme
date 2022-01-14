@@ -16,6 +16,7 @@ source ${0:A:h}/lib/async.zsh
 autoload -Uz add-zsh-hook
 setopt PROMPT_SUBST
 async_init
+PROMPT=''
 # }}}
 
 # Options {{{
@@ -27,6 +28,9 @@ DRACULA_DISPLAY_CONTEXT=${DRACULA_DISPLAY_CONTEXT:-0}
 
 # Changes the arrow icon
 DRACULA_ARROW_ICON=${DRACULA_ARROW_ICON:-➜}
+
+# Set to 1 to use an new line for commands
+DRACULA_DISPLAY_NEW_LINE=${DRACULA_DISPLAY_NEW_LINE:-0}
 
 # function to detect if git has support for --no-optional-locks
 dracula_test_git_optional_lock() {
@@ -59,18 +63,19 @@ DRACULA_GIT_NOLOCK=${DRACULA_GIT_NOLOCK:-$(dracula_test_git_optional_lock)}
 # Status segment {{{
 # arrow is green if last command was successful, red if not, 
 # turns yellow in vi command mode
-PROMPT='%(1V:%F{yellow}:%(?:%F{green}:%F{red}))${DRACULA_ARROW_ICON}'
+if (( ! DRACULA_DISPLAY_NEW_LINE )); then
+    PROMPT+='%(1V:%F{yellow}:%(?:%F{green}:%F{red}))${DRACULA_ARROW_ICON} '
+fi
 # }}}
 
 # Time segment {{{
 dracula_time_segment() {
   if (( DRACULA_DISPLAY_TIME )); then
     if [[ -z "$TIME_FORMAT" ]]; then
-      TIME_FORMAT=" %-H:%M"
-      
+      TIME_FORMAT="%-H:%M"
       # check if locale uses AM and PM
       if ! locale -ck LC_TIME | grep 'am_pm=";"' > /dev/null; then
-        TIME_FORMAT=" %-I:%M%p"
+        TIME_FORMAT="%-I:%M%p"
       fi
     fi
 
@@ -78,7 +83,9 @@ dracula_time_segment() {
   fi
 }
 
-PROMPT+='%F{green}%B$(dracula_time_segment) '
+if [[ -n $(dracula_time_segment) ]]; then
+  PROMPT+='%F{green}%B$(dracula_time_segment) '
+fi
 # }}}
 
 # User context segment {{{
@@ -154,6 +161,13 @@ ZSH_THEME_GIT_PROMPT_CLEAN=") %F{green}%B✔ "
 ZSH_THEME_GIT_PROMPT_DIRTY=") %F{yellow}%B✗ "
 ZSH_THEME_GIT_PROMPT_PREFIX="%F{cyan}%B("
 ZSH_THEME_GIT_PROMPT_SUFFIX="%f%b"
+# }}}
+
+# LINEBREAK {{{
+if (( DRACULA_DISPLAY_NEW_LINE)); then
+    PROMPT+=$'\n'
+    PROMPT+='%(1V:%F{yellow}:%(?:%F{green}:%F{red}))${DRACULA_ARROW_ICON} '
+fi
 # }}}
 
 # ensure vi mode is handled by prompt
