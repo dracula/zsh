@@ -10,6 +10,13 @@ All instructions can be found at [draculatheme.com/zsh](https://draculatheme.com
 
 ## Configuration
 
+### Disabling Git Segment
+
+The git segment can be disabled by setting the following in the config:
+```
+DRACULA_DISPLAY_GIT=0
+```
+
 ### Time Segment
 
 The time segment shows a clock in either a 12 or 24 hour format

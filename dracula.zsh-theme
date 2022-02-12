@@ -20,6 +20,9 @@ PROMPT=''
 # }}}
 
 # Options {{{
+# Set to 0 to disable the git status
+DRACULA_DISPLAY_GIT=${DRACULA_DISPLAY_GIT:-1}
+
 # Set to 1 to show the date
 DRACULA_DISPLAY_TIME=${DRACULA_DISPLAY_TIME:-0}
 
@@ -64,7 +67,7 @@ DRACULA_GIT_NOLOCK=${DRACULA_GIT_NOLOCK:-$(dracula_test_git_optional_lock)}
 # arrow is green if last command was successful, red if not, 
 # turns yellow in vi command mode
 if (( ! DRACULA_DISPLAY_NEW_LINE )); then
-    PROMPT+='%(1V:%F{yellow}:%(?:%F{green}:%F{red}))${DRACULA_ARROW_ICON} '
+  PROMPT+='%(1V:%F{yellow}:%(?:%F{green}:%F{red}))${DRACULA_ARROW_ICON} '
 fi
 # }}}
 
@@ -79,13 +82,11 @@ dracula_time_segment() {
       fi
     fi
 
-    print -P "%D{$TIME_FORMAT}"
+    print -P "%D{$TIME_FORMAT} "
   fi
 }
 
-if [[ -n $(dracula_time_segment) ]]; then
-  PROMPT+='%F{green}%B$(dracula_time_segment) '
-fi
+PROMPT+='%F{green}%B$(dracula_time_segment)'
 # }}}
 
 # User context segment {{{
@@ -117,6 +118,7 @@ PROMPT+='$(custom_variable_prompt)'
 # Async git segment {{{
 
 dracula_git_status() {
+  (( ! DRACULA_DISPLAY_GIT )) && return
   cd "$1"
   
   local ref branch lockflag
