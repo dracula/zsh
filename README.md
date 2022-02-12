@@ -45,6 +45,12 @@ The custom segment can be changed by setting the `DRACULA_CUSTOM_VARIABLE` envir
 export DRACULA_CUSTOM_VARIABLE=AWS:PROD:EU-WEST-1
 ```
 
+### New Line for commands
+You can display a new line for your commands. So you are able to split the terminal infos and the following command in seperate lines.
+```sh
+DRACULA_DISPLAY_NEW_LINE=1
+```
+
 ### Git Locking
 
 This program automatically makes use of git's `--no-optional-locks` option,
