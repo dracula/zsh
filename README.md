@@ -63,9 +63,9 @@ forcefully disable or enable the functionality by setting the variable
 
 This theme is maintained by the following person(s) and a bunch of [awesome contributors](https://github.com/dracula/zsh/graphs/contributors).
 
-| [![Aidan Williams](https://avatars0.githubusercontent.com/u/30708886?s=70)](https://github.com/AGitBoy) |
+| [![Avalon Williams](https://avatars0.githubusercontent.com/u/30708886?s=70)](https://github.com/AGitBoy) |
 | ------------------------------------------------------------------------------------------------------- |
-| [Aidan Williams](https://github.com/AGitBoy)                                                            |
+| [Avalon Williams](https://github.com/AGitBoy)                                                            |
 
 ## License
 
