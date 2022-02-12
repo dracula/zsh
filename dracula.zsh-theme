@@ -99,6 +99,14 @@ PROMPT+='%F{magenta}%B$(dracula_context)'
 PROMPT+='%F{blue}%B%c '
 # }}}
 
+# Custom variable {{{
+function custom_variable_prompt() {
+  [[ -z $DRACULA_CUSTOM_VARIABLE ]] && return
+  echo "$FG[008]$DRACULA_CUSTOM_VARIABLE "
+}
+PROMPT+='$(custom_variable_prompt)'
+# }}}
+
 # Async git segment {{{
 
 dracula_git_status() {
