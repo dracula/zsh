@@ -129,9 +129,9 @@ dracula_git_status() {
 	ref=$(=git $lockflag symbolic-ref --quiet HEAD 2>/tmp/git-errors)
 
 	case $? in
-		0)	 ;;
+		0)   ;;
 		128) return ;;
-		*)	 ref=$(=git $lockflag rev-parse --short HEAD 2>/tmp/git-errors) || return ;;
+		*)   ref=$(=git $lockflag rev-parse --short HEAD 2>/tmp/git-errors) || return ;;
 	esac
 
 	branch=${ref#refs/heads/}
