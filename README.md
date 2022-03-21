@@ -13,6 +13,7 @@ All instructions can be found at [draculatheme.com/zsh](https://draculatheme.com
 ### Disabling Git Segment
 
 The git segment can be disabled by setting the following in the config:
+
 ```
 DRACULA_DISPLAY_GIT=0
 ```
@@ -53,7 +54,9 @@ export DRACULA_CUSTOM_VARIABLE=AWS:PROD:EU-WEST-1
 ```
 
 ### New Line for commands
+
 You can display a new line for your commands. So you are able to split the terminal infos and the following command in seperate lines.
+
 ```sh
 DRACULA_DISPLAY_NEW_LINE=1
 ```
@@ -73,6 +76,12 @@ This theme is maintained by the following person(s) and a bunch of [awesome cont
 | [![Avalon Williams](https://avatars0.githubusercontent.com/u/30708886?s=70)](https://github.com/avalonwilliams) |
 | --------------------------------------------------------------------------------------------------------------- |
 | [Avalon Williams](https://github.com/avalonwilliams)                                                            |
+
+## Community
+
+- [Twitter](https://twitter.com/draculatheme) - Best for getting updates about themes and new stuff.
+- [GitHub](https://github.com/dracula/dracula-theme/discussions) - Best for asking questions and discussing issues.
+- [Discord](https://draculatheme.com/discord-invite) - Best for hanging out with the community.
 
 ## License
 
