@@ -65,6 +65,15 @@ dracula_test_git_optional_lock() {
 
 # use --no-optional-locks flag on git
 DRACULA_GIT_NOLOCK=${DRACULA_GIT_NOLOCK:-$(dracula_test_git_optional_lock)}
+
+# time format string
+if [[ -z "$DRACULA_TIME_FORMAT" ]]; then
+	DRACULA_TIME_FORMAT="%-H:%M"
+	# check if locale uses AM and PM
+	if locale -ck LC_TIME 2>/dev/null | grep -q '^t_fmt="%r"$'; then
+		DRACULA_TIME_FORMAT="%-I:%M%p"
+	fi
+fi
 # }}}
 
 # Status segment {{{
@@ -78,15 +87,7 @@ fi
 # Time segment {{{
 dracula_time_segment() {
 	if (( DRACULA_DISPLAY_TIME )); then
-		if [[ -z "$TIME_FORMAT" ]]; then
-			TIME_FORMAT="%-H:%M"
-			# check if locale uses AM and PM
-			if ! locale -ck LC_TIME | grep 'am_pm=";"' > /dev/null; then
-				TIME_FORMAT="%-I:%M%p"
-			fi
-		fi
-
-		print -P "%D{$TIME_FORMAT} "
+		print -P "%D{$DRACULA_TIME_FORMAT} "
 	fi
 }
 
@@ -111,9 +112,9 @@ PROMPT+='%F{magenta}%B$(dracula_context)'
 PROMPT+='%F{blue}%B'
 
 if (( DRACULA_DISPLAY_FULL_CWD )); then
-  PROMPT+='%~ '
+	PROMPT+='%~ '
 else
-  PROMPT+='%c '
+	PROMPT+='%c '
 fi
 # }}}
 

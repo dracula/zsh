@@ -27,6 +27,14 @@ based on your locale. To enable it, use the following in your config file:
 DRACULA_DISPLAY_TIME=1
 ```
 
+If you want to set the time format, you can set this using the
+[strftime(3)](https://manpage.me/?q=strftime) format. For example to use a 24
+hour format:
+
+```
+DRACULA_TIME_FORMAT="%-H:%M"
+```
+
 ### Context Segment
 
 The context segment shows the username, and, if the user is root or logged in via
