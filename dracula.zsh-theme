@@ -135,12 +135,12 @@ dracula_git_status() {
 	
 	(( DRACULA_GIT_NOLOCK )) && lockflag="--no-optional-locks"
 
-	ref=$(=git $lockflag symbolic-ref --quiet HEAD 2>/tmp/git-errors)
+	ref=$(=git $lockflag symbolic-ref --quiet HEAD 2>/dev/null)
 
 	case $? in
 		0)   ;;
 		128) return ;;
-		*)   ref=$(=git $lockflag rev-parse --short HEAD 2>/tmp/git-errors) || return ;;
+		*)   ref=$(=git $lockflag rev-parse --short HEAD 2>/dev/null) || return ;;
 	esac
 
 	branch=${ref#refs/heads/}
