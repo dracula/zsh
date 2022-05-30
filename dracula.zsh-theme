@@ -33,7 +33,7 @@ DRACULA_DISPLAY_CONTEXT=${DRACULA_DISPLAY_CONTEXT:-0}
 # Changes the arrow icon
 DRACULA_ARROW_ICON=${DRACULA_ARROW_ICON:-➜}
 
-# Set to 1 to use an new line for commands
+# Set to 1 to use a new line for commands
 DRACULA_DISPLAY_NEW_LINE=${DRACULA_DISPLAY_NEW_LINE:-0}
 
 # Set to 1 to show full path of current working directory
@@ -77,11 +77,17 @@ fi
 # }}}
 
 # Status segment {{{
+dracula_arrow() {
+	if [[ "$1" = "start" ]] && (( ! DRACULA_DISPLAY_NEW_LINE )); then
+		print -P "%(1V:%F{yellow}:%(?:%F{green}:%F{red}))${DRACULA_ARROW_ICON} "
+	elif [[ "$1" = "end" ]] && (( DRACULA_DISPLAY_NEW_LINE )); then
+		print -P "\n%(1V:%F{yellow}:%(?:%F{green}:%F{red}))${DRACULA_ARROW_ICON} "
+	fi
+}
+
 # arrow is green if last command was successful, red if not, 
 # turns yellow in vi command mode
-if (( ! DRACULA_DISPLAY_NEW_LINE )); then
-	PROMPT+='%(1V:%F{yellow}:%(?:%F{green}:%F{red}))${DRACULA_ARROW_ICON} '
-fi
+PROMPT+='$(dracula_arrow start)'
 # }}}
 
 # Time segment {{{
@@ -109,20 +115,23 @@ PROMPT+='%F{magenta}%B$(dracula_context)'
 # }}}
 
 # Directory segment {{{
-PROMPT+='%F{blue}%B'
+dracula_directory() {
+	if (( DRACULA_DISPLAY_FULL_CWD )); then
+		print -P '%~ '
+	else
+		print -P '%c '
+	fi
+}
 
-if (( DRACULA_DISPLAY_FULL_CWD )); then
-	PROMPT+='%~ '
-else
-	PROMPT+='%c '
-fi
+PROMPT+='%F{blue}%B$(dracula_directory)'
 # }}}
 
 # Custom variable {{{
-function custom_variable_prompt() {
-	[[ -z $DRACULA_CUSTOM_VARIABLE ]] && return
-	echo "$FG[008]$DRACULA_CUSTOM_VARIABLE "
+custom_variable_prompt() {
+	[[ -z "$DRACULA_CUSTOM_VARIABLE" ]] && return
+	echo "%F{yellow}$DRACULA_CUSTOM_VARIABLE "
 }
+
 PROMPT+='$(custom_variable_prompt)'
 # }}}
 
@@ -185,10 +194,7 @@ ZSH_THEME_GIT_PROMPT_SUFFIX="%f%b"
 # }}}
 
 # Linebreak {{{
-if (( DRACULA_DISPLAY_NEW_LINE )); then
-	PROMPT+=$'\n'
-	PROMPT+='%(1V:%F{yellow}:%(?:%F{green}:%F{red}))${DRACULA_ARROW_ICON} '
-fi
+PROMPT+='$(dracula_arrow end)'
 # }}}
 
 # define widget without clobbering old definitions
