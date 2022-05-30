@@ -36,6 +36,15 @@ SSH, the hostname of the system. To enable this segment, use the following in yo
 DRACULA_DISPLAY_CONTEXT=1
 ```
 
+### Directory Segment
+
+The current working directory is displayed as base name only.  To display full
+path, use the following in your config file:
+
+```
+DRACULA_DISPLAY_FULL_CWD=1
+```
+
 ### Status Segment Indicator
 
 The status segment indicator (the arrow at the beginning), can be changed by setting the `DRACULA_ARROW_ICON` variable. For example, to use an ASCII '->':

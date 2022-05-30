@@ -36,6 +36,9 @@ DRACULA_ARROW_ICON=${DRACULA_ARROW_ICON:-➜}
 # Set to 1 to use an new line for commands
 DRACULA_DISPLAY_NEW_LINE=${DRACULA_DISPLAY_NEW_LINE:-0}
 
+# Set to 1 to show full path of current working directory
+DRACULA_DISPLAY_FULL_CWD=${DRACULA_DISPLAY_FULL_CWD:-0}
+
 # function to detect if git has support for --no-optional-locks
 dracula_test_git_optional_lock() {
 	local git_version=${DEBUG_OVERRIDE_V:-"$(git version | cut -d' ' -f3)"}
@@ -105,7 +108,13 @@ PROMPT+='%F{magenta}%B$(dracula_context)'
 # }}}
 
 # Directory segment {{{
-PROMPT+='%F{blue}%B%c '
+PROMPT+='%F{blue}%B'
+
+if (( DRACULA_DISPLAY_FULL_CWD )); then
+  PROMPT+='%~ '
+else
+  PROMPT+='%c '
+fi
 # }}}
 
 # Custom variable {{{
