@@ -79,15 +79,15 @@ fi
 # Status segment {{{
 dracula_arrow() {
 	if [[ "$1" = "start" ]] && (( ! DRACULA_DISPLAY_NEW_LINE )); then
-		print -P "%(1V:%F{yellow}:%(?:%F{green}:%F{red}))${DRACULA_ARROW_ICON} "
+		print -P "$DRACULA_ARROW_ICON "
 	elif [[ "$1" = "end" ]] && (( DRACULA_DISPLAY_NEW_LINE )); then
-		print -P "\n%(1V:%F{yellow}:%(?:%F{green}:%F{red}))${DRACULA_ARROW_ICON} "
+		print -P "\n$DRACULA_ARROW_ICON "
 	fi
 }
 
 # arrow is green if last command was successful, red if not, 
 # turns yellow in vi command mode
-PROMPT+='$(dracula_arrow start)'
+PROMPT+='%(1V:%F{yellow}:%(?:%F{green}:%F{red}))%B$(dracula_arrow start)'
 # }}}
 
 # Time segment {{{
@@ -194,7 +194,7 @@ ZSH_THEME_GIT_PROMPT_SUFFIX="%f%b"
 # }}}
 
 # Linebreak {{{
-PROMPT+='$(dracula_arrow end)'
+PROMPT+='%(1V:%F{yellow}:%(?:%F{green}:%F{red}))%B$(dracula_arrow end)'
 # }}}
 
 # define widget without clobbering old definitions
