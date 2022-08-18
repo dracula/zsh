@@ -31,7 +31,7 @@ DRACULA_DISPLAY_TIME=${DRACULA_DISPLAY_TIME:-0}
 DRACULA_DISPLAY_CONTEXT=${DRACULA_DISPLAY_CONTEXT:-0}
 
 # Changes the arrow icon
-DRACULA_ARROW_ICON=${DRACULA_ARROW_ICON:-➜}
+DRACULA_ARROW_ICON=${DRACULA_ARROW_ICON:-➜ }
 
 # Set to 1 to use a new line for commands
 DRACULA_DISPLAY_NEW_LINE=${DRACULA_DISPLAY_NEW_LINE:-0}
@@ -79,9 +79,9 @@ fi
 # Status segment {{{
 dracula_arrow() {
 	if [[ "$1" = "start" ]] && (( ! DRACULA_DISPLAY_NEW_LINE )); then
-		print -P "$DRACULA_ARROW_ICON "
+		print -P "$DRACULA_ARROW_ICON"
 	elif [[ "$1" = "end" ]] && (( DRACULA_DISPLAY_NEW_LINE )); then
-		print -P "\n$DRACULA_ARROW_ICON "
+		print -P "\n$DRACULA_ARROW_ICON"
 	fi
 }
 
