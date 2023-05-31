@@ -79,9 +79,9 @@ fi
 # Status segment {{{
 dracula_arrow() {
 	if [[ "$1" = "start" ]] && (( ! DRACULA_DISPLAY_NEW_LINE )); then
-		print -P "$DRACULA_ARROW_ICON"
+		print -P -- "$DRACULA_ARROW_ICON"
 	elif [[ "$1" = "end" ]] && (( DRACULA_DISPLAY_NEW_LINE )); then
-		print -P "\n$DRACULA_ARROW_ICON"
+		print -P -- "\n$DRACULA_ARROW_ICON"
 	fi
 }
 
