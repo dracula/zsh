@@ -2,7 +2,7 @@
 
 #### Install using Git
 
-If you are a git user, you can install the theme and keep up to date by cloning the repo into your oh-mu-zsh directory:
+If you are a git user, you can install the theme and keep up to date by cloning the repo into your oh-my-zsh directory:
 
     cd $ZSH_CUSTOM/themes
     git clone https://github.com/dracula/zsh.git dracula
