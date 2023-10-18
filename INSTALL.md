@@ -6,9 +6,9 @@ If you are a git user, you can install the theme and keep up to date by cloning 
 
     git clone https://github.com/dracula/zsh.git
 
-And creating a symbolic link to [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh/)'s theme folder:
+And copying the file `dracula.zsh-theme` and the folder `/lib` to [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh/)'s theme folder:
 
-    ln -s $DRACULA_THEME/dracula.zsh-theme $OH_MY_ZSH/themes/dracula.zsh-theme
+    cp -r $DRACULA_THEME/dracula.zsh-theme $DRACULA_THEME/lib $OH_MY_ZSH/themes/dracula.zsh-theme
 
 _P.S.: Remember that you should replace `$DRACULA_THEME` and `$OH_MY_ZSH` with the actual directories for this command to work._
 
@@ -21,6 +21,10 @@ _P.S.: Remember that you should replace `$DRACULA_THEME` and `$OH_MY_ZSH` with t
 #### Activating theme
 
 Go to your `~/.zshrc` file and set `ZSH_THEME="dracula"`.
+
+Load the new configuration:
+
+    source ~/.zshrc
 
 #### Install using [zplug](https://github.com/zplug/zplug)
 
