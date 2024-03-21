@@ -187,7 +187,7 @@ add-zsh-hook precmd dracula_git_async
 
 PROMPT+='$DRACULA_GIT_STATUS'
 
-ZSH_THEME_GIT_PROMPT_CLEAN=") %F{green}%B✔ "
+ZSH_THEME_GIT_PROMPT_CLEAN=") %F{green}%B✓ "
 ZSH_THEME_GIT_PROMPT_DIRTY=") %F{yellow}%B✗ "
 ZSH_THEME_GIT_PROMPT_PREFIX="%F{cyan}%B("
 ZSH_THEME_GIT_PROMPT_SUFFIX="%f%b"
