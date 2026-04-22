@@ -53,6 +53,29 @@ path, use the following in your config file:
 DRACULA_DISPLAY_FULL_CWD=1
 ```
 
+### Limit Number of Displayed Directories In Prompt
+
+If you are using the [DRACULA_DISPLAY_FULL_CWD](#directory-segment) setting to display the full path in your prompt, you can use
+this setting to limit the number of directories that get displayed in the path. Default is 0 which displays the full path.
+
+```sh
+DRACULA_DIR_TRIM=2
+```
+
+#### Examples
+
+DRACULA_DIR_TRIM=0
+
+```sh
+➜ username ~/level1/level2/level3/level4
+```
+
+DRACULA_DIR_TRIM=2
+
+```sh
+➜ username level3/level4
+```
+
 ### Status Segment Indicator
 
 The status segment indicator (the arrow at the beginning), can be changed by setting the `DRACULA_ARROW_ICON` variable. For example, to use an ASCII '->':

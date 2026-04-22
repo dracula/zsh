@@ -39,6 +39,9 @@ DRACULA_DISPLAY_NEW_LINE=${DRACULA_DISPLAY_NEW_LINE:-0}
 # Set to 1 to show full path of current working directory
 DRACULA_DISPLAY_FULL_CWD=${DRACULA_DISPLAY_FULL_CWD:-0}
 
+# Set to 1 or greater in order to show that many directories in your path prompt
+DRACULA_DIR_TRIM=${DRACULA_DIR_TRIM:-0}
+
 # function to detect if git has support for --no-optional-locks
 dracula_test_git_optional_lock() {
 	local git_version=${DEBUG_OVERRIDE_V:-"$(git version | cut -d' ' -f3)"}
@@ -117,7 +120,7 @@ PROMPT+='%F{magenta}%B$(dracula_context)'
 # Directory segment {{{
 dracula_directory() {
 	if (( DRACULA_DISPLAY_FULL_CWD )); then
-		print -P '%~ '
+		print -P '%${DRACULA_DIR_TRIM}~ '
 	else
 		print -P '%c '
 	fi
