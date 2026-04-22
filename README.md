@@ -12,9 +12,9 @@ All instructions can be found at [draculatheme.com/zsh](https://draculatheme.com
 
 This theme is maintained by the following person and many [amazing contributors](https://github.com/dracula/zsh/graphs/contributors).
 
-| [![Luxonauta](https://avatars.githubusercontent.com/u/477394?s=70)](https://github.com/luxonauta) |
-| ------------------------------------------------------------------------------------------------- |
-| [Luxonauta](https://github.com/luxonauta)                                                         |
+| [![Luxonauta](https://github.com/luxonauta.png?size=100)](https://github.com/luxonauta) |
+| --------------------------------------------------------------------------------------- |
+| [Luxonauta](https://github.com/luxonauta)                                               |
 
 ## Community
 
