@@ -1,31 +1,113 @@
-### [Zsh](http://zsh.org/)
+### [Zsh](https://zsh.org)
 
-#### Install using Git
+This guide assumes you are using [Oh My Zsh](https://github.com/ohmyzsh/ohmyzsh).
 
-If you are a git user, you can install the theme and keep up to date by cloning the repo:
+If `ZSH` is not set in your shell, this guide uses `${HOME}/.oh-my-zsh`.
 
-    git clone https://github.com/dracula/zsh.git
+#### Install with Git (recommended)
 
-And copying the file `dracula.zsh-theme` and the folder `/lib` to [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh/)'s theme folder:
+1. Clone this repository:
 
-    cp -r $DRACULA_THEME/dracula.zsh-theme $DRACULA_THEME/lib $OH_MY_ZSH/themes/dracula.zsh-theme
+```sh
+git clone https://github.com/dracula/zsh.git
+```
 
-_P.S.: Remember that you should replace `$DRACULA_THEME` and `$OH_MY_ZSH` with the actual directories for this command to work._
+2. Set the clone location:
 
-#### Install manually
+```sh
+DRACULA_THEME="$PWD/zsh"
+```
 
-1.  Download using the [GitHub .zip download](https://github.com/dracula/zsh/archive/master.zip) option and unzip them.
-2.  Move `dracula.zsh-theme` file to [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh/)'s theme folder: `oh-my-zsh/themes/dracula.zsh-theme`.
-3.  Move `/lib` to [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh/)'s theme folder: `oh-my-zsh/themes/lib`.
+3. Copy the theme file and the repository `lib` folder to your themes directory:
 
-#### Activating theme
+```sh
+cp -r "$DRACULA_THEME/dracula.zsh-theme" "$DRACULA_THEME/lib" "${ZSH:-$HOME/.oh-my-zsh}/themes/"
+```
 
-Go to your `~/.zshrc` file and set `ZSH_THEME="dracula"`.
+#### Install from ZIP
 
-Load the new configuration:
+1. Download and unzip [dracula/zsh](https://github.com/dracula/zsh/archive/master.zip).
+2. From the extracted folder, copy `dracula.zsh-theme` to `${ZSH:-$HOME/.oh-my-zsh}/themes/dracula.zsh-theme`.
+3. From the extracted folder, copy `lib` to `${ZSH:-$HOME/.oh-my-zsh}/themes/lib`.
 
-    source ~/.zshrc
+> Important: copy only the repository `lib` directory. Do not move your system `/lib` directory.
 
-#### Install using [zplug](https://github.com/zplug/zplug)
+#### Activate the theme
 
-Just add `zplug "dracula/zsh", as:theme` to your `~/.zshrc` file.
+Open `~/.zshrc` and set:
+
+```sh
+ZSH_THEME="dracula"
+```
+
+Reload your shell:
+
+```sh
+source ~/.zshrc
+```
+
+#### Configure the theme
+
+Add any of these variables to `~/.zshrc`.
+
+Basic options:
+
+```sh
+# Show git branch and status (1 = on, 0 = off)
+DRACULA_DISPLAY_GIT=1
+
+# Show current time
+DRACULA_DISPLAY_TIME=0
+
+# Show username and host context
+DRACULA_DISPLAY_CONTEXT=0
+
+# Show the path as the full current working directory
+DRACULA_DISPLAY_FULL_CWD=0
+
+# Trim the directory path when full cwd is enabled (0 = no trim)
+DRACULA_DIR_TRIM=0
+
+# Put command input on a new line
+DRACULA_DISPLAY_NEW_LINE=0
+```
+
+Extra options:
+
+```sh
+# Arrow symbol at the prompt start
+DRACULA_ARROW_ICON="-> "
+
+# Time format, for example a 24-hour clock
+DRACULA_TIME_FORMAT="%-H:%M"
+
+# Custom text segment
+export DRACULA_CUSTOM_VARIABLE="AWS:PROD:EU-WEST-1"
+```
+
+Git locking option:
+
+Dracula auto-detects support for `git --no-optional-locks`.
+Detection runs when the theme loads using your current `git version`.
+
+```sh
+# Force off
+DRACULA_GIT_NOLOCK=0
+
+# Force on
+DRACULA_GIT_NOLOCK=1
+```
+
+Compatibility notes:
+
+- The theme checks multiple locations for `lib/async.zsh` (`$ZSH_CUSTOM`, `$ZSH`, and theme-relative path).
+- If async loading fails, only the git segment is disabled and the prompt still works.
+- Zsh `5.0.8+` is recommended for best compatibility.
+
+#### Optional: install with [zplug](https://github.com/zplug/zplug)
+
+Add this line to `~/.zshrc`:
+
+```sh
+zplug "dracula/zsh", as:theme
+```

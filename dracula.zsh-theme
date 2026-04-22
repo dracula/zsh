@@ -1,6 +1,6 @@
 # -*- mode: sh; -*-
 # vim: set ft=sh :
-# Dracula Theme v1.2.5
+# Dracula Theme v1.2.6
 #
 # https://github.com/dracula/dracula-theme
 #
@@ -10,17 +10,38 @@
 # http://zenorocha.mit-license.org
 #
 # @author Zeno Rocha <hi@zenorocha.com>
-# @maintainer Avalon Williams <avalonwilliams@protonmail.com>
+# @maintainer Lucas de França <https://github.com/luxonauta>
 
-# Initialization {{{
-source ${0:A:h}/lib/async.zsh
+# Bootstrap {{{
+dracula_source_async() {
+	local -a candidate_paths
+	local path
+	candidate_paths=(
+		"${0:A:h}/lib/async.zsh"
+		"${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/dracula/lib/async.zsh"
+		"${ZSH:-$HOME/.oh-my-zsh}/themes/dracula/lib/async.zsh"
+	)
+
+	for path in $candidate_paths; do
+		if [[ -r "$path" ]]; then
+			source "$path"
+			return 0
+		fi
+	done
+
+	print -u2 -- "dracula theme: unable to load lib/async.zsh, disabling git prompt segment"
+	return 1
+}
+
+DRACULA_ASYNC_AVAILABLE=1
+dracula_source_async || DRACULA_ASYNC_AVAILABLE=0
 autoload -Uz add-zsh-hook
 setopt PROMPT_SUBST
-async_init
+(( DRACULA_ASYNC_AVAILABLE )) && async_init
 PROMPT=''
 # }}}
 
-# Options {{{
+# Configuration {{{
 # Set to 0 to disable the git status
 DRACULA_DISPLAY_GIT=${DRACULA_DISPLAY_GIT:-1}
 
@@ -44,26 +65,26 @@ DRACULA_DIR_TRIM=${DRACULA_DIR_TRIM:-0}
 
 # function to detect if git has support for --no-optional-locks
 dracula_test_git_optional_lock() {
-	local git_version=${DEBUG_OVERRIDE_V:-"$(git version | cut -d' ' -f3)"}
-	local git_version="$(git version | cut -d' ' -f3)"
+	local git_version
+	git_version=${DEBUG_OVERRIDE_V:-"$(git version | cut -d' ' -f3)"}
 	# test for git versions < 2.14.0
 	case "$git_version" in
 		[0-1].*)
-			echo 0
+			print 0
 			return 1
 			;;
 		2.[0-9].*)
-			echo 0
+			print 0
 			return 1
 			;;
 		2.1[0-3].*)
-			echo 0
+			print 0
 			return 1
 			;;
 	esac
 
 	# if version > 2.14.0 return true
-	echo 1
+	print 1
 }
 
 # use --no-optional-locks flag on git
@@ -79,7 +100,8 @@ if [[ -z "$DRACULA_TIME_FORMAT" ]]; then
 fi
 # }}}
 
-# Status segment {{{
+# Prompt segments {{{
+# Status arrow {{{
 dracula_arrow() {
 	if [[ "$1" = "start" ]] && (( ! DRACULA_DISPLAY_NEW_LINE )); then
 		print -P -- "$DRACULA_ARROW_ICON"
@@ -93,7 +115,7 @@ dracula_arrow() {
 PROMPT+='%(1V:%F{yellow}:%(?:%F{green}:%F{red}))%B$(dracula_arrow start)'
 # }}}
 
-# Time segment {{{
+# Time {{{
 dracula_time_segment() {
 	if (( DRACULA_DISPLAY_TIME )); then
 		print -P "%D{$DRACULA_TIME_FORMAT} "
@@ -103,13 +125,13 @@ dracula_time_segment() {
 PROMPT+='%F{green}%B$(dracula_time_segment)'
 # }}}
 
-# User context segment {{{
+# User context {{{
 dracula_context() {
 	if (( DRACULA_DISPLAY_CONTEXT )); then
 		if [[ -n "${SSH_CONNECTION-}${SSH_CLIENT-}${SSH_TTY-}" ]] || (( EUID == 0 )); then
-			echo '%n@%m '
+			print -- '%n@%m '
 		else
-			echo '%n '
+			print -- '%n '
 		fi
 	fi
 }
@@ -117,7 +139,7 @@ dracula_context() {
 PROMPT+='%F{magenta}%B$(dracula_context)'
 # }}}
 
-# Directory segment {{{
+# Directory {{{
 dracula_directory() {
 	if (( DRACULA_DISPLAY_FULL_CWD )); then
 		print -P '%${DRACULA_DIR_TRIM}~ '
@@ -130,15 +152,15 @@ PROMPT+='%F{blue}%B$(dracula_directory)'
 # }}}
 
 # Custom variable {{{
-custom_variable_prompt() {
+dracula_custom_variable() {
 	[[ -z "$DRACULA_CUSTOM_VARIABLE" ]] && return
-	echo "%F{yellow}$DRACULA_CUSTOM_VARIABLE "
+	print -- "%F{yellow}$DRACULA_CUSTOM_VARIABLE "
 }
 
-PROMPT+='$(custom_variable_prompt)'
+PROMPT+='$(dracula_custom_variable)'
 # }}}
 
-# Async git segment {{{
+# Git (async) {{{
 
 dracula_git_status() {
 	(( ! DRACULA_DISPLAY_GIT )) && return
@@ -161,16 +183,16 @@ dracula_git_status() {
 	if [[ -n $branch ]]; then
 		echo -n "${ZSH_THEME_GIT_PROMPT_PREFIX}${branch}"
 
-		local git_status icon
+		local git_status
 		git_status="$(LC_ALL=C =git $lockflag status 2>&1)"
 		
 		if [[ "$git_status" =~ 'new file:|deleted:|modified:|renamed:|Untracked files:' ]]; then
-			echo -n "$ZSH_THEME_GIT_PROMPT_DIRTY"
+			print -n -- "$ZSH_THEME_GIT_PROMPT_DIRTY"
 		else
-			echo -n "$ZSH_THEME_GIT_PROMPT_CLEAN"
+			print -n -- "$ZSH_THEME_GIT_PROMPT_CLEAN"
 		fi
 
-		echo -n "$ZSH_THEME_GIT_PROMPT_SUFFIX"
+		print -n -- "$ZSH_THEME_GIT_PROMPT_SUFFIX"
 	fi
 }
 
@@ -186,7 +208,9 @@ dracula_git_async() {
 	async_job dracula_git_worker dracula_git_status "$(pwd)"
 }
 
-add-zsh-hook precmd dracula_git_async
+if (( DRACULA_ASYNC_AVAILABLE )); then
+	add-zsh-hook precmd dracula_git_async
+fi
 
 PROMPT+='$DRACULA_GIT_STATUS'
 
@@ -200,22 +224,36 @@ ZSH_THEME_GIT_PROMPT_SUFFIX="%f%b"
 PROMPT+='%(1V:%F{yellow}:%(?:%F{green}:%F{red}))%B$(dracula_arrow end)'
 # }}}
 
+# ZLE widgets {{{
 # define widget without clobbering old definitions
 dracula_defwidget() {
+	emulate -L zsh
+	setopt localoptions nonomatch
+
 	local fname=dracula-wrap-$1
-	local prev=($(zle -l -L "$1"))
-	local oldfn=${prev[4]:-$1}
+	local prev_line
+	local -a prev_words
+	local oldfn
+
+	prev_line="$(zle -l -L "$1" 2>/dev/null)"
 
 	# if no existing zle functions, just define it normally
-	if [[ -z "$prev" ]]; then
+	if [[ -z "$prev_line" ]]; then
+		zle -N $1 $2
+		return
+	fi
+
+	prev_words=(${(z)prev_line})
+	oldfn=${prev_words[4]:-$1}
+
+	# if parsing failed, define it normally
+	if [[ -z "$oldfn" ]]; then
 		zle -N $1 $2
 		return
 	fi
 
 	# if already defined, return
-	[[ "${prev[4]}" = $fname ]] && return
-	
-	oldfn=${prev[4]:-$1}
+	[[ "$oldfn" = $fname ]] && return
 
 	zle -N dracula-old-$oldfn $oldfn
 
@@ -238,6 +276,7 @@ dracula_zle_update() {
 
 dracula_defwidget zle-line-init dracula_zle_update
 dracula_defwidget zle-keymap-select dracula_zle_update
+# }}}
 
 # Ensure effects are reset
 PROMPT+='%f%b'

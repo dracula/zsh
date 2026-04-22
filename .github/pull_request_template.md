@@ -1,1 +1,1 @@
-> If you're fixing a UI issue, make sure you take two screenshots. One that shows the actual bug and another that shows how you fixed it.
+> If you are fixing a UI issue, include two screenshots: one showing the bug and one showing the fix.

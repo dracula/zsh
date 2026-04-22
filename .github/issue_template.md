@@ -1,1 +1,1 @@
-> If you're reporting an UI issue, make sure you take a screenshot that shows the actual bug.
+> If you are reporting a UI issue, include a screenshot that clearly shows the bug.
