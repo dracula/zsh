@@ -139,7 +139,7 @@ PROMPT+='$(custom_variable_prompt)'
 
 dracula_git_status() {
 	(( ! DRACULA_DISPLAY_GIT )) && return
-	cd "$1"
+	builtin cd "$1"
 	
 	local ref branch lockflag
 	
