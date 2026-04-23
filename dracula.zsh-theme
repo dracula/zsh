@@ -17,7 +17,7 @@ dracula_source_async() {
 	local -a candidate_paths
 	local path
 	candidate_paths=(
-		"${0:A:h}/lib/async.zsh"
+		"${${(%):-%x}:A:h}/lib/async.zsh"
 		"${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/dracula/lib/async.zsh"
 		"${ZSH:-$HOME/.oh-my-zsh}/themes/dracula/lib/async.zsh"
 	)
